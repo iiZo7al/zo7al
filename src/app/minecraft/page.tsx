@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Reveal from "@/components/ui/Reveal";
@@ -14,14 +15,12 @@ export const metadata: Metadata = {
   description: "Your next Minecraft adventure starts here.",
 };
 
-export default function MinecraftPage() {
+export default async function MinecraftPage() {
+  const t = await getTranslations("minecraft");
+
   return (
     <main data-accent="minecraft">
-      <PageHero
-        eyebrow="Minecraft"
-        title="ZO7AL NETWORK"
-        text="Your next Minecraft adventure starts here."
-      >
+      <PageHero eyebrow={t("eyebrow")} title={t("title")} text={t("text")}>
         <MagneticButton>
           <a
             href={MINECRAFT_SERVER.storeUrl}
@@ -31,7 +30,7 @@ export default function MinecraftPage() {
             className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold"
             style={{ background: "var(--accent)", color: "#07080B" }}
           >
-            Open Store
+            {t("openStore")}
           </a>
         </MagneticButton>
       </PageHero>
@@ -46,11 +45,7 @@ export default function MinecraftPage() {
 
       <section className="relative border-t py-24 sm:py-32" style={{ borderColor: "var(--border)" }}>
         <div className="mx-auto max-w-[1180px] px-6">
-          <SectionHeader
-            eyebrow="Connect"
-            title="Join in seconds"
-            text="Java and Bedrock, one network."
-          />
+          <SectionHeader eyebrow={t("connectEyebrow")} title={t("connectTitle")} text={t("connectText")} />
           <div className="mt-14">
             <ServerConnect />
           </div>
@@ -59,7 +54,7 @@ export default function MinecraftPage() {
 
       <section className="relative border-t py-24 sm:py-32" style={{ borderColor: "var(--border)" }}>
         <div className="mx-auto max-w-[1180px] px-6">
-          <SectionHeader eyebrow="Compatibility" title="Supported versions" />
+          <SectionHeader eyebrow={t("compatEyebrow")} title={t("compatTitle")} />
           <div className="mt-14">
             <VersionTimeline />
           </div>
@@ -68,7 +63,7 @@ export default function MinecraftPage() {
 
       <section className="relative border-t py-24 sm:py-32" style={{ borderColor: "var(--border)" }}>
         <div className="mx-auto max-w-[1180px] px-6">
-          <SectionHeader eyebrow="Gameplay" title="Modes" />
+          <SectionHeader eyebrow={t("gameplayEyebrow")} title={t("gameplayTitle")} />
           <div className="mt-14">
             <ModesGrid />
           </div>
@@ -80,11 +75,11 @@ export default function MinecraftPage() {
           <Reveal className="text-center" y={20}>
             <div style={{ background: "var(--surface)", borderColor: "var(--border)" }} className="rounded-3xl border p-10 sm:p-16">
               <p className="text-label mb-4" style={{ color: "var(--accent)" }}>
-                Support the network
+                {t("supportEyebrow")}
               </p>
-              <h2 className="text-display text-4xl sm:text-5xl">SUPPORT ZO7AL</h2>
+              <h2 className="text-display text-4xl sm:text-5xl">{t("supportTitle")}</h2>
               <p className="mt-5 mx-auto max-w-md text-lg text-[var(--text-muted)]">
-                Support the network and explore the official Zo7al store.
+                {t("supportText")}
               </p>
               <div className="mt-8">
                 <MagneticButton>
@@ -96,7 +91,7 @@ export default function MinecraftPage() {
                     className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold"
                     style={{ background: "var(--accent)", color: "#07080B" }}
                   >
-                    Open Store →
+                    {t("openStore")} →
                   </a>
                 </MagneticButton>
               </div>
