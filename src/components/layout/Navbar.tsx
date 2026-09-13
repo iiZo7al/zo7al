@@ -4,11 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { NAV_LINKS, DISCORD_LINK } from "@/lib/data/site";
+import { useTranslations } from "next-intl";
+import { Menu, X } from "lucide-react";
+import { NAV_LINKS, DISCORD_LINK, SITE } from "@/lib/data/site";
 import MagneticButton from "@/components/cursor/MagneticButton";
+import BrandIcon from "@/components/ui/BrandIcon";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -53,7 +58,7 @@ export default function Navbar() {
             className="inline-block h-2 w-2 rounded-full"
             style={{ background: "var(--accent)", boxShadow: "0 0 12px var(--glow)" }}
           />
-          ZO7AL
+          {SITE.name}
         </Link>
 
         <ul className="hidden md:flex items-center gap-1">
@@ -75,23 +80,25 @@ export default function Navbar() {
                       transition={{ type: "spring", stiffness: 400, damping: 32 }}
                     />
                   )}
-                  <span className="relative">{link.label}</span>
+                  <span className="relative">{t(link.key)}</span>
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
           <a
             href={DISCORD_LINK}
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="link"
-            className="text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+            className="flex items-center gap-1.5 px-2 text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
           >
-            Discord
+            <BrandIcon slug="discord" size={15} />
+            {t("discord")}
           </a>
+          <LanguageSwitcher />
           <MagneticButton>
             <Link
               href="/store"
@@ -99,29 +106,18 @@ export default function Navbar() {
               className="text-sm font-semibold rounded-full px-5 py-2.5 transition-transform"
               style={{ background: "var(--accent)", color: "#07080B" }}
             >
-              Store
+              {t("store")}
             </Link>
           </MagneticButton>
         </div>
 
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden flex items-center justify-center p-2"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
         >
-          <span
-            className="block h-[1.5px] w-5 bg-white transition-transform duration-300"
-            style={{ transform: mobileOpen ? "translateY(4.5px) rotate(45deg)" : "none" }}
-          />
-          <span
-            className="block h-[1.5px] w-5 bg-white transition-opacity duration-200"
-            style={{ opacity: mobileOpen ? 0 : 1 }}
-          />
-          <span
-            className="block h-[1.5px] w-5 bg-white transition-transform duration-300"
-            style={{ transform: mobileOpen ? "translateY(-4.5px) rotate(-45deg)" : "none" }}
-          />
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
@@ -149,22 +145,25 @@ export default function Navbar() {
                   background: pathname === link.href ? "var(--surface-elevated)" : "transparent",
                 }}
               >
-                {link.label}
+                {t(link.key)}
               </Link>
             ))}
             <div className="h-px my-1" style={{ background: "var(--border)" }} />
             <Link href="/store" className="px-4 py-3 rounded-xl text-base font-medium" style={{ color: "var(--text-muted)" }}>
-              Store
+              {t("store")}
             </Link>
             <a
               href={DISCORD_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-3 rounded-xl text-base font-medium"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl text-base font-medium"
               style={{ color: "var(--text-muted)" }}
             >
-              Discord
+              <BrandIcon slug="discord" size={16} />
+              {t("discord")}
             </a>
+            <div className="h-px my-1" style={{ background: "var(--border)" }} />
+            <LanguageSwitcher variant="mobile" />
           </motion.div>
         )}
       </AnimatePresence>
