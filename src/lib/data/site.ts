@@ -13,11 +13,11 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Minecraft", href: "/minecraft" },
-  { label: "Modpacks", href: "/modpacks" },
-  { label: "Fortnite", href: "/fortnite" },
-  { label: "Socials", href: "/socials" },
+  { key: "home", label: "Home", href: "/" },
+  { key: "minecraft", label: "Minecraft", href: "/minecraft" },
+  { key: "modpacks", label: "Modpacks", href: "/modpacks" },
+  { key: "fortnite", label: "Fortnite", href: "/fortnite" },
+  { key: "socials", label: "Socials", href: "/socials" },
 ] as const;
 
 export const STORE_LINK = "https://zo7al.tebex.io/";
