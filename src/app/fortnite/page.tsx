@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Maps and experiences built by Zo7al.",
 };
 
-export const revalidate = 21600; // 6 hours
+export const revalidate = 21600;
 
 export default async function FortnitePage() {
   const [t, { items, source }] = await Promise.all([
@@ -22,7 +22,11 @@ export default async function FortnitePage() {
 
   return (
     <main data-accent="fortnite">
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} text={t("text")}>
+      <PageHero
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        text={t("text")}
+      >
         <MagneticButton>
           <a
             href={FORTNITE_PROFILE_URL}
@@ -30,7 +34,10 @@ export default async function FortnitePage() {
             rel="noopener noreferrer"
             data-cursor="button"
             className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold"
-            style={{ background: "var(--accent)", color: "#07080B" }}
+            style={{
+              background: "var(--accent)",
+              color: "#07080B",
+            }}
           >
             {t("creatorPage")} ↗
           </a>
@@ -39,11 +46,20 @@ export default async function FortnitePage() {
 
       <section className="relative pb-24 sm:pb-32">
         <div className="mx-auto max-w-[1180px] px-6">
-          <SectionHeader eyebrow={t("islandsEyebrow")} title={t("islandsTitle")} />
+          <SectionHeader
+            eyebrow={t("islandsEyebrow")}
+            title={t("islandsTitle")}
+          />
+
           <div className="mt-14">
             <div className="mb-8 flex items-center justify-end">
-              <p className="text-label">{source === "live" ? t("islandsLiveLabel") : t("islandsLabel")}</p>
+              <p className="text-label">
+                {source === "live"
+                  ? t("islandsLiveLabel")
+                  : t("islandsLabel")}
+              </p>
             </div>
+
             <MapGallery maps={items} />
           </div>
         </div>
