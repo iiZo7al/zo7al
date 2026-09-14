@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
 import {
   MODRINTH_API_URL,
@@ -21,6 +22,8 @@ type RawProject = {
 };
 
 export default function ModpackGallery() {
+  const t = useTranslations("modpacks");
+  const tc = useTranslations("common");
   const [projects, setProjects] = useState<ModrinthProject[] | null>(null);
   const [source, setSource] = useState<"live" | "fallback">("fallback");
 
@@ -70,7 +73,7 @@ export default function ModpackGallery() {
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
-        <p className="text-label">{source === "live" ? "Live from Modrinth" : "Modrinth"}</p>
+        <p className="text-label">{source === "live" ? t("modrinthLiveLabel") : t("modrinthLabel")}</p>
         <a
           href={MODRINTH_PROFILE_URL}
           target="_blank"
@@ -78,7 +81,7 @@ export default function ModpackGallery() {
           data-cursor="link"
           className="text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
         >
-          View profile ↗
+          {tc("viewProfile")} ↗
         </a>
       </div>
 
@@ -134,12 +137,12 @@ export default function ModpackGallery() {
               </div>
 
               <div className="mt-5 flex items-center justify-between text-sm">
-                <span className="text-[var(--text-muted)]">{project.downloads} downloads</span>
+                <span className="text-[var(--text-muted)]">{project.downloads} {tc("downloads")}</span>
                 <span
                   className="font-semibold transition-transform group-hover:translate-x-1"
                   style={{ color: "var(--accent)" }}
                 >
-                  View Project →
+                  {tc("viewProject")} →
                 </span>
               </div>
             </a>

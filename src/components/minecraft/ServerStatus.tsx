@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { MINECRAFT_SERVER } from "@/lib/data/minecraft";
 
 type Status =
@@ -14,6 +15,7 @@ type Status =
     };
 
 export default function ServerStatus() {
+  const t = useTranslations("minecraft");
   const [status, setStatus] = useState<Status>({ state: "loading" });
 
   useEffect(() => {
@@ -61,10 +63,7 @@ export default function ServerStatus() {
       aria-live="polite"
     >
       <div className="flex items-center gap-3">
-        <span
-          className="relative flex h-2.5 w-2.5"
-          aria-hidden="true"
-        >
+        <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
           <span
             className="absolute inline-flex h-full w-full rounded-full opacity-60"
             style={{
@@ -78,35 +77,35 @@ export default function ServerStatus() {
           />
         </span>
         <span className="text-label" style={{ color: "var(--text)" }}>
-          {status.state === "loading" && "Checking status…"}
-          {status.state === "error" && "ZO7AL Network — Ready to play"}
-          {isLive && (status.online ? "Online" : "Offline")}
+          {status.state === "loading" && t("checkingStatus")}
+          {status.state === "error" && t("readyToPlay")}
+          {isLive && (status.online ? t("online") : t("offline"))}
         </span>
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3">
         <div>
-          <p className="text-label mb-1">Players</p>
-          <p className="text-2xl font-bold tabular-nums">
+          <p className="text-label mb-1">{t("players")}</p>
+          <p className="text-2xl font-bold tabular-nums" dir="ltr">
             {isLive && status.players ? `${status.players.online} / ${status.players.max}` : "—"}
           </p>
         </div>
         <div>
-          <p className="text-label mb-1">Version</p>
-          <p className="text-2xl font-bold">
+          <p className="text-label mb-1">{t("version")}</p>
+          <p className="text-2xl font-bold" dir="ltr">
             {isLive && status.version ? status.version : "—"}
           </p>
         </div>
         <div className="col-span-2 sm:col-span-1">
-          <p className="text-label mb-1">Address</p>
-          <p className="text-2xl font-bold truncate">{MINECRAFT_SERVER.javaAddress}</p>
+          <p className="text-label mb-1">{t("address")}</p>
+          <p className="text-2xl font-bold truncate" dir="ltr">
+            {MINECRAFT_SERVER.javaAddress}
+          </p>
         </div>
       </div>
 
       {status.state === "error" && (
-        <p className="mt-6 text-sm text-[var(--text-muted)]">
-          Live status is unavailable right now — connect with the address below to jump in.
-        </p>
+        <p className="mt-6 text-sm text-[var(--text-muted)]">{t("statusUnavailable")}</p>
       )}
     </div>
   );

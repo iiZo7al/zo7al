@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Check, Copy } from "lucide-react";
 import { MINECRAFT_SERVER } from "@/lib/data/minecraft";
 import { flashCursor } from "@/components/cursor/CustomCursor";
 import MagneticButton from "@/components/cursor/MagneticButton";
@@ -9,10 +11,14 @@ function CopyRow({
   label,
   address,
   disabledNote,
+  copyLabel,
+  copiedLabel,
 }: {
   label: string;
   address: string | null;
   disabledNote?: string;
+  copyLabel: string;
+  copiedLabel: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -21,7 +27,7 @@ function CopyRow({
     try {
       await navigator.clipboard.writeText(address);
       setCopied(true);
-      flashCursor("COPIED", 1200);
+      flashCursor(copiedLabel.toUpperCase(), 1200);
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
       // clipboard unavailable — no-op, address is still visible/selectable
@@ -36,7 +42,9 @@ function CopyRow({
       <div>
         <p className="text-label mb-2">{label}</p>
         {address ? (
-          <p className="font-mono text-lg sm:text-xl">{address}</p>
+          <p className="font-mono text-lg sm:text-xl" dir="ltr">
+            {address}
+          </p>
         ) : (
           <p className="text-lg text-[var(--text-muted)]">{disabledNote}</p>
         )}
@@ -57,13 +65,14 @@ function CopyRow({
           >
             {copied ? (
               <>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Copied
+                <Check size={14} />
+                {copiedLabel}
               </>
             ) : (
-              `Copy ${label}`
+              <>
+                <Copy size={14} />
+                {copyLabel}
+              </>
             )}
           </button>
         </MagneticButton>
@@ -73,13 +82,22 @@ function CopyRow({
 }
 
 export default function ServerConnect() {
+  const t = useTranslations("minecraft");
+  const tc = useTranslations("common");
   return (
     <div className="grid gap-5">
-      <CopyRow label="Java IP" address={MINECRAFT_SERVER.javaAddress} />
       <CopyRow
-        label="Bedrock Address"
+        label={t("javaLabel")}
+        address={MINECRAFT_SERVER.javaAddress}
+        copyLabel={t("copyJava")}
+        copiedLabel={tc("copied")}
+      />
+      <CopyRow
+        label={t("bedrockLabel")}
         address={MINECRAFT_SERVER.bedrockAddress}
-        disabledNote="Bedrock support is on the roadmap — not published yet."
+        disabledNote={t("bedrockNote")}
+        copyLabel={t("copyBedrock")}
+        copiedLabel={tc("copied")}
       />
     </div>
   );
