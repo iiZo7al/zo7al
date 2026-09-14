@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import HeroBackground from "./HeroBackground";
 import MagneticButton from "@/components/cursor/MagneticButton";
 
@@ -17,6 +18,8 @@ const item = {
 };
 
 export default function Hero() {
+  const t = useTranslations("home");
+
   return (
     <section className="relative flex min-h-[100svh] items-center justify-center pt-[var(--nav-height)]">
       <HeroBackground />
@@ -28,25 +31,25 @@ export default function Hero() {
         className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center"
       >
         <motion.p variants={item} className="text-label mb-6" style={{ color: "var(--accent)" }}>
-          {"@iiZo7al — Gaming Universe"}
+          {t("eyebrow")}
         </motion.p>
 
         <motion.h1
           variants={item}
           className="text-display text-[16vw] sm:text-7xl md:text-8xl lg:text-[7.5rem]"
         >
-          BUILD.
+          {t("headline1")}
           <br />
-          PLAY.
+          {t("headline2")}
           <br />
-          CREATE.
+          {t("headline3")}
         </motion.h1>
 
         <motion.p
           variants={item}
           className="mt-8 max-w-xl text-balance text-lg text-[var(--text-muted)] sm:text-xl"
         >
-          Minecraft servers, Fortnite maps, modpacks and gaming projects by Zo7al.
+          {t("subtitle")}
         </motion.p>
 
         <motion.div variants={item} className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -57,7 +60,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-transform"
               style={{ background: "var(--accent)", color: "#07080B" }}
             >
-              Explore ZO7AL
+              {t("ctaExplore")}
             </Link>
           </MagneticButton>
           <MagneticButton>
@@ -67,7 +70,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-semibold text-[var(--text)] transition-colors hover:bg-white/5"
               style={{ borderColor: "var(--border-strong)" }}
             >
-              View Projects
+              {t("ctaViewProjects")}
             </a>
           </MagneticButton>
         </motion.div>
@@ -80,7 +83,7 @@ export default function Hero() {
         className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-[var(--text-muted)]"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-label">Scroll</span>
+          <span className="text-label">{t("scroll")}</span>
           <span className="h-8 w-px" style={{ background: "var(--border-strong)" }} />
         </div>
       </motion.div>
